@@ -63,16 +63,16 @@ ReactDOM Render HTML ยกตัวอย่างเช่น
 ReactDOM.render(<p>Hello World</p>, document.getElementById('root'));
 ```
 
-```
+```js
 const data = (
     <div>
         <h1>Hello World</h1>
     </div>
 );
-ReactDOM.render(data, document.getElementById('root));
+ReactDOM.render(data, document.getElementById('root'));
 ```
 
-```
+```js
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <h1>Hello World</h1>
@@ -103,7 +103,8 @@ Virtual DOM มีลักษณะคล้าย ๆ กับ DOM ใน HTM
 # Functional Component
 สร้างแบบ Component ที่ง่ายที่สุด คือ เป็นรูปแบบฟังก์ชั่นโดยสร้างฟังก์ชั่นธรรมดา และ Return HTML ออกมา
 โดย กำหนดให้ตัวอักษรตัวแรกของชื่อฟังก์ชั่นเป็นตัวพิมพ์ใหญ่เสมอ เช่น
-```
+
+```js
 function HelloComponent() {
     return(
         <h1>Hello React</h1>
@@ -116,7 +117,8 @@ ReactDOM.render(<HelloComponent />, document.getElementById('root'))
 # Class Component
 สร้าง Class ที่ extends มาจาก React.Component และ Return HTML ออกมา
 แต่ถ้าสร้างเป็นแบบ Class จะมีความสามารถในการใช้งานมากกว่าแบบ Functional
-```
+
+```js
 class HelloComponent extends React.Component {
     render() {
         return <h1>Hello React</h1>
@@ -129,7 +131,7 @@ ReactDOM.render(<HelloComponent />, document.getElementById('root'))
 # สร้าง Component แยกเป็นไฟล์แล้ว Import เข้ามาใช้งาน
 การสร้าง Component ไว้เป็นไฟล์ด้านนอกที่มีนามสกุล .js, .jsx จากนั้นก็นำเจ้ามาทำงาน
 
-```
+```js
 function HelloComponent() {
     return (
         <h1>Hello Component</h1>
@@ -139,7 +141,7 @@ function HelloComponent() {
 export default HelloComponent
 ```
 
-```
+```js
 import HelloComponent from './HelloComponent.js'
 
 function App() {
@@ -157,8 +159,9 @@ function App() {
 - การใส่ Class Style ที่เป็น Attribute ใน JSX จะมีการกำหนด className แทน class เนื่องจากคำว่า class เป็น keyword
 
 ตัวอย่างการเขียนแบบ div /
-*return มี () เพราะมี return หลายบรรทัด
-```
+* return มี ( ) เพราะมี return หลายบรรทัด
+
+```js
 function HelloComponent() {
     return (
         <div>
@@ -169,7 +172,8 @@ function HelloComponent() {
 ```
 
 ตัวอย่างการเขียนแบบ React.Fragment
-```
+
+```js
 function HelloComponent() {
     return (
         <React.Fragment>
@@ -180,7 +184,8 @@ function HelloComponent() {
 ```
 
 ตัวอย่างการเขียนแบบ Fragment &lt;&gt;&lt;/&gt;
-```
+
+```js
 function HelloComponent() {
     return (
         <>
@@ -192,7 +197,8 @@ function HelloComponent() {
 
 # JSX Dynamic Data
 ทำการสร้างตัวแปลแล้ว เรียกใช้ข้อมูลผ่าน { }
-```
+
+```js
 function Customer() {
   const name = 'Customer A'
   const address = 'Address A'
@@ -219,7 +225,8 @@ export default App;
 # JSX Style & ClassName
 การเขียนแบบ inline ใช้ style={{properties:value, ...}} \
 ตัวอย่าง color, textAlign, fontSize
-```
+
+```js
 function Customer() {
   const name = 'Customer A'
   const address = 'Address A'
@@ -236,13 +243,14 @@ function Customer() {
 
 สร้างไฟล์ CSS แล้ว import มาใช้งาน \
 Item.css
-```
+
+```css
 .item {
     color: blue
 }
 ```
 
-```
+```js
 function Customer() {
   const name = 'Customer A'
   const address = 'Address A'
@@ -257,14 +265,13 @@ function Customer() {
 }
 ```
 
-
 # React Prop
 Props (Properties) คือ ตัวแปรที่สามารถส่งเข้าไปใน Components ได้ผ่านการกำหนด Attribute
 ส่งผลให้ Component แต่ละตัวสามารถรับค่าจากด้านนอกเข้าไปทำงานได้
 
 &lt;ComponentName PropertiesName=PropertiesValue /&gt;
 
-```
+```js
 function Customer(props) {
   return (
       <>
@@ -286,7 +293,8 @@ function App() {
 ```
 
 # Props Destructuring
-```
+
+```js
 function Customer({name, address}) {
   return (
       <>
@@ -310,7 +318,8 @@ function App() {
 # Props and ArrayMap with Key
 Keys เป็น Properties ที่อยู่ใน JSX โดย Keys จะมีค่าไม่ซ้ำกัน
 กำหนดขึ้นเพื่อให้ React นำไปเช็คว่ามี Component ใดบ้างที่เปลี่ยนแปลงค่าไปในการ Render หน้าเว็บ
-```
+
+```js
 function Customer({name, address}) {
   return (
       <>
@@ -341,7 +350,8 @@ function App() {
 ```
 
 แบบที่ในข้อมูลมี key อยู่ด้วย
-```
+
+```js
 function App() {
   const data = [
     {key: 1, name: 'Name 1', address: 'Address 1'},
@@ -366,7 +376,7 @@ https://www.npmjs.com/package/uuid
 npm install uuid
 ```
 
-```
+```js
 import { v4 as uuidv4 } from 'uuid'
 
 function Customer({name, address}) {
@@ -403,10 +413,16 @@ https://www.npmjs.com/package/prop-types \
 npm install prop-types
 ```
 
-ComponentName.propTypes = { properties: PropType.type, ...}
+```js
+ComponentName.propTypes = { 
+  properties: PropType.type,
+  ...
+}
+```
 
 กำหนด Type และ Required
-```
+
+```js
 import { v4 as uuidv4 } from 'uuid'
 import PropTypes from 'prop-types'
 
@@ -439,4 +455,5 @@ function App() {
   );
 }
 ```
+
 
