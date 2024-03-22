@@ -4,9 +4,11 @@ Command: npx gltfjsx@6.2.16 public/models/Animated_Woman.glb -o src/components/A
 */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { useFrame, useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
-import { useGraph } from '@react-three/fiber'
 import { SkeletonUtils } from 'three-stdlib'
+
+const MOVEMENT_SPEED = 0.032
 
 export function AnimatedWomanClone({ 
   hairColor = "green",
@@ -14,6 +16,20 @@ export function AnimatedWomanClone({
   bottomColor = "brown",
   ...props
 }) {
+
+  const position = useMemo(() => props.position, [])
+
+  useFrame(() => {
+    if(group.current.position.distanceTo(props.position) > 0.1) {
+      const direction = group.current.position.clone().sub(props.position).normalize().multiplyScalar(MOVEMENT_SPEED)
+      group.current.position.sub(direction)
+      group.current.lookAt(props.position)
+      setAnimation('CharacterArmature|Run')
+    } else {
+      setAnimation('CharacterArmature|Idle')
+    }
+  })
+
   const group = useRef()
   const { scene, materials, animations } = useGLTF('/models/Animated_Woman.glb')
 
@@ -29,12 +45,12 @@ export function AnimatedWomanClone({
   const [animation, setAnimation] = useState('CharacterArmature|Idle')
 
   useEffect(() => {
-    actions[animation].reset().fadeIn(0.5).play()
-    return () => actions[animation].fadeOut(0.5)
+    actions[animation].reset().fadeIn(0.32).play()
+    return () => actions[animation]?.fadeOut(0.32)
   }, [animation])
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} position={position} dispose={null}>
       <group name="Root_Scene">
         <group name="RootNode">
           <group name="CharacterArmature" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
