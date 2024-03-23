@@ -9,11 +9,42 @@ const io = new Server({
 io.listen(3000)
 
 const characters = [];
+const items = {
+    shelfSmall: {
+        name: "Shelf_Small",
+        size: [4, 2]
+    },
+    couchSmall: {
+        name: "Couch_Small",
+        size: [3, 2]
+    },
+    couchMedium: {
+        name: "Couch_Medium",
+        size: [4, 2]
+    }
+}
+const map = {
+    size: [10,10],
+    gridDivision: 2,
+    items: [
+        {
+            ...items.shelfSmall,
+            gridPosition: [4, 4]
+        },
+        {
+            ...items.shelfSmall,
+            gridPosition: [8, 8],
+            rotation: 1  
+        }
+    ]
+}
 
 const generateRandomPosition = () => {
-    const x = Math.floor(Math.random() * 3)
+    // const x = Math.floor(Math.random() * 3)
+    const x = Math.floor(Math.random() * map.size[0])
     const y = 0
-    const z = Math.floor(Math.random() * 3)
+    // const z = Math.floor(Math.random() * 3)
+    const z = Math.floor(Math.random() * map.size[1])
     return [x, y, z]
 }
 
@@ -31,6 +62,13 @@ io.on("connection", (socket) => {
         hairColor: generateRandomHexColor(),
         topColor: generateRandomHexColor(),
         bottomColor: generateRandomHexColor()
+    })
+
+    socket.emit("map", {
+        map,
+        characters,
+        id: socket.id,
+        items,
     })
 
     io.emit("characters", characters);
