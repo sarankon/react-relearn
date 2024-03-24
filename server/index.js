@@ -2,11 +2,11 @@ const { Server } = require("socket.io");
 
 const io = new Server({
     cors: {
-        origin: "http://localhost:5173"
+        origin: ["http://localhost:5173"]
     }
 })
 
-io.listen(3000)
+io.listen(3001)
 
 const characters = [];
 const items = {
@@ -53,7 +53,7 @@ const generateRandomHexColor = () => {
 }
 
 io.on("connection", (socket) => {
-    console.log("user connected")
+    console.log("user connected ")
     socket.emit("hello")
 
     characters.push({
@@ -85,3 +85,4 @@ io.on("connection", (socket) => {
         io.emit("characters", characters)
     })
 })
+
